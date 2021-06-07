@@ -1,11 +1,5 @@
 <template>
-  <a-layout>
-    <!-- <a-layout-sider @collapsed="collapsed" :trigger="null" collapsible>
-    </a-layout-sider> -->
-    <a-layout-content>
-      <router-view />
-    </a-layout-content>
-  </a-layout>
+  <router-view />
 </template>
 
 <script lang="ts">

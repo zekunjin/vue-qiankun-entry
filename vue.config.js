@@ -15,12 +15,12 @@ module.exports = {
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     proxy: {
       '/backend': {
-        target: 'http://192.168.134.2:9800/backend', // 你接口的域名
+        target: 'http://52.131.230.152:9800/backend', // 你接口的域名
         changeOrigin: true,
         ws: true
       },
       '/assist': {
-        target: 'http://192.168.134.2:9800', // 你接口的域名
+        target: 'http://52.131.230.152:9800', // 你接口的域名
         changeOrigin: true,
         ws: true
       }
