@@ -5,16 +5,16 @@ import BasicLayout from '@/layouts/BasicLayout.vue'
 import MicroRouterView from '@/layouts/MicroRouterView.vue'
 import RouteView from '@/layouts/RouteView.vue'
 
+export interface IPermissionState {
+  dynamicRoutes: RouteRecordRaw[]
+  dynamicMenus: IDynamicMenu[]
+}
+
 export interface IDynamicMenu {
   title_zh: string
   title_en: string
   icon: string
   children?: IDynamicMenu[]
-}
-
-export interface IPermissionState {
-  dynamicRoutes: RouteRecordRaw[]
-  dynamicMenus: IDynamicMenu[]
 }
 
 export interface IDynamicRoute {
