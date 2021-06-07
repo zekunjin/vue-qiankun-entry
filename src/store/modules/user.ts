@@ -12,7 +12,7 @@ const user = {
   namespaced: true,
 
   state: {
-    token: '',
+    token: LocalAuthService.getToken() || '',
     username: '',
     roles: []
   },
