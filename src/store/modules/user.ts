@@ -19,7 +19,6 @@ const user = {
 
   mutations: {
     SET_TOKEN(state: IUserState, token: string): void {
-      debugger
       state.token = token
     },
     SET_USERNAME(state: IUserState, username: string): void {

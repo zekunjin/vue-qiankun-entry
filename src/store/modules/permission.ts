@@ -64,12 +64,15 @@ export const formatDynamicRecords = (
         component: depth > 0 ? RouteView : MicroRouterView,
         children: []
       })
-      targetMenus.push({
-        title_en: route.meta ? (route.meta.titleEN as string) : '',
-        title_zh: route.meta ? (route.meta.titleZH as string) : '',
-        icon: route.meta ? (route.meta.icon as string) : '',
-        children: []
-      })
+
+      if (route.meta && !route.meta.hidden) {
+        targetMenus.push({
+          title_en: route.meta ? (route.meta.titleEN as string) : '',
+          title_zh: route.meta ? (route.meta.titleZH as string) : '',
+          icon: route.meta ? (route.meta.icon as string) : '',
+          children: []
+        })
+      }
 
       if (route.children && route.children.length > 0) {
         generateRecords(
