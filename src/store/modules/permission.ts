@@ -39,6 +39,10 @@ export const getDynamicRecords = (
 ): Promise<{ routes: RouteRecordRaw[]; menus: IDynamicMenu[] }> => {
   return new Promise((resolve) => {
     AjaxAuthService.getMenu(token).then(({ data }) => {
+      data.push({
+        path: '/vue',
+        children: [{ path: '/vue/about' }]
+      })
       const { routes, menus } = formatDynamicRecords(data)
       rootRoute.children = routes
       resolve({ routes: [rootRoute], menus })
@@ -77,7 +81,7 @@ export const formatDynamicRecords = (
       if (route.children && route.children.length > 0) {
         generateRecords(
           targetRoutes[index].children as RouteRecordRaw[],
-          targetMenus[index].children as IDynamicMenu[],
+          (targetMenus[index]?.children as IDynamicMenu[]) || [],
           route.children,
           depth + 1
         )

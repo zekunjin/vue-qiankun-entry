@@ -11,9 +11,15 @@ export interface IApplication {
 
 export const MICRO_APPLICATIONS: IApplication[] = [
   {
+    name: 'micro-application-vue',
+    entry: '//localhost:8081',
+    container: '#micro-application-container',
+    activeRule: '/vue'
+  },
+  {
     name: 'cloudresourcecenter',
     entry: '//localhost:9011/cloudresourcecenter1/',
-    container: '#micro-container',
+    container: '#micro-application-container',
     activeRule: '/cloudresourcecenter',
     props: { data: { token: LocalAuthService.getToken() } }
   }

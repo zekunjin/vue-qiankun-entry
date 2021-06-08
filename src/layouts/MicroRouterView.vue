@@ -1,5 +1,5 @@
 <template>
-  <div id="micro-container" />
+  <div id="micro-application-container" />
 </template>
 
 <script lang="ts">
