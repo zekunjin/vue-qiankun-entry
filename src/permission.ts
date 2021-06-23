@@ -3,7 +3,7 @@ import router from './router'
 import store from './store'
 import LocalAuthService from './services/local/auth'
 
-const whiteList = ['auth-login']
+const whiteList = ['auth-login', 'generator']
 
 router.beforeEach((to, from, next) => {
   const token = LocalAuthService.getToken()
@@ -23,7 +23,9 @@ router.beforeEach((to, from, next) => {
             next({ ...to, replace: true })
           })
           .catch(() => {
-            store.dispatch('user/Logout')
+            store.dispatch('user/Logout').then(() => {
+              next({ name: 'auth-login', query: { redirect: to.fullPath } })
+            })
           })
       }
     }

@@ -14,26 +14,13 @@ const constantRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/auth/login/index.vue')
       }
     ]
-  }
+  },
 
-  // {
-  //   path: '/',
-  //   name: 'index',
-  //   component: BasicLayout,
-  //   children: [
-  //     {
-  //       path: '/cloudresourcecenter',
-  //       name: 'cloudresourcecenter',
-  //       component: MicroRouterView,
-  //       children: [
-  //         {
-  //           path: '/cloudresourcecenter/resourceoverview',
-  //           component: RouteView
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // }
+  {
+    path: '/generator',
+    name: 'generator',
+    component: () => import('@/views/generator/index.vue')
+  }
 ]
 
 const router = createRouter({
