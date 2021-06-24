@@ -1,5 +1,6 @@
 import svgs from './svgs'
 import buttonProps from './props/button'
+import gridProps from './props/grid'
 
 export const generalComponents = [
   { name: 'Button', image: svgs.button, ...buttonProps },
@@ -8,7 +9,7 @@ export const generalComponents = [
 
 export const layoutComponents = [
   { name: 'Divider', image: svgs.divider },
-  { name: 'Grid', image: svgs.grid },
+  { name: 'Grid', image: svgs.grid, ...gridProps },
   { name: 'Layout', image: svgs.layout },
   { name: 'Space', image: svgs.space }
 ]

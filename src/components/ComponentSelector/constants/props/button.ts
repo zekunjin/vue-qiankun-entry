@@ -6,7 +6,7 @@ export default {
     loading: false,
     shape: '',
     size: 'default',
-    type: 'default',
+    type: 'primary',
     block: false
   }
 }

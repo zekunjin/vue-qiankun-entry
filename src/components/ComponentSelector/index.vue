@@ -37,6 +37,7 @@ export default defineComponent({
       name: string
       innerHTML?: string
       props?: { [key: string]: any }
+      container?: []
     }) => {
       emit('confirm', { key: uuidv4(), ...options })
     }

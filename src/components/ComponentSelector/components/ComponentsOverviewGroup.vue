@@ -8,7 +8,7 @@
             hoverable
             size="small"
             :title="item.name"
-            @click="$emit('select', item)"
+            @click="$emit('select', JSON.parse(JSON.stringify(item)))"
           >
             <div class="components-overview-img">
               <img :src="item.image" :alt="item.name" />

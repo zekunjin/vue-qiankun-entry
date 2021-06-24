@@ -1,14 +1,7 @@
 <template>
   <div class="page-container">
-    <component-parse :value="componentConfig" />
-  </div>
-
-  <div class="create-page-component">
-    <a-button type="primary" shape="circle" size="large" @click="toggleVisible">
-      <template #icon>
-        <plus-outlined />
-      </template>
-    </a-button>
+    {{ componentConfig }}
+    <component-parse :value="componentConfig" @select="handleSelectTarget" />
   </div>
 
   <component-selector
@@ -21,9 +14,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, Ref } from 'vue'
 import { Button } from 'ant-design-vue'
-import { PlusOutlined } from '@ant-design/icons-vue'
 import ComponentSelector from '@/components/ComponentSelector/index.vue'
-import ComponentParse from '@/components/ComponentParse/index.vue'
 
 export interface IComponent {
   key: string
@@ -31,18 +22,17 @@ export interface IComponent {
   innerHTML?: string
   style?: { [key: string]: string }
   props?: { [key: string]: any }
-  header?: IComponent
-  footer?: IComponent
-  sider?: IComponent
-  container?: IComponent
+  header?: IComponent[]
+  footer?: IComponent[]
+  sider?: IComponent[]
+  container?: IComponent[]
+  [key: string]: any
 }
 
 export default defineComponent({
   components: {
     [Button.name]: Button,
-    [PlusOutlined.name]: PlusOutlined,
-    [ComponentSelector.name]: ComponentSelector,
-    [ComponentParse.name]: ComponentParse
+    [ComponentSelector.name]: ComponentSelector
   },
 
   setup() {
@@ -57,24 +47,60 @@ export default defineComponent({
       sider: undefined,
       container: undefined
     })
-    const selectedContainer = reactive({})
+    const selectedContainer = reactive({ key: '', layout: '', index: -1 })
     const visible: Ref<boolean> = ref(false)
 
     const toggleVisible = () => {
       visible.value = !visible.value
     }
 
-    const handleConfirmComponent = (component: {
-      key: string
-      name: string
-      innerHTML?: string
-      props?: { [key: string]: any }
+    const handleSelectTarget = (options?: {
+      component: IComponent
+      layout: string
+      index: number
     }) => {
-      if (!componentConfig.key) {
+      if (options) {
+        selectedContainer.key = options.component.key
+        selectedContainer.layout = options.layout
+        selectedContainer.index = options.index
+      }
+      toggleVisible()
+    }
+
+    const getComponentByKey = (resource: IComponent[], key: string) => {
+      let result: IComponent | undefined = resource.find(
+        (item) => item.key === key
+      )
+      if (!result) {
+        for (const item of resource) {
+          if (item.container && item.container.length > 0) {
+            getComponentByKey(item.container, key)
+          }
+        }
+      }
+
+      return result
+    }
+
+    const handleConfirmComponent = (component: IComponent) => {
+      if (!selectedContainer.key) {
         componentConfig.key = component.key
         componentConfig.name = component.name
         componentConfig.innerHTML = component.innerHTML || ''
         componentConfig.props = component.props || {}
+        componentConfig.container = component.container || []
+      } else {
+        const resource = [componentConfig]
+        const target = getComponentByKey(resource, selectedContainer.key)
+        if (target) {
+          const { layout, index } = selectedContainer
+          const current = target[layout][index]
+          current.key = component.key
+          current.name = component.name
+          current.innerHTML = component.innerHTML || ''
+          current.props = component.props || {}
+          current.container = component.container || []
+        }
       }
       toggleVisible()
     }
@@ -84,6 +110,7 @@ export default defineComponent({
       selectedContainer,
       visible,
       toggleVisible,
+      handleSelectTarget,
       handleConfirmComponent
     }
   }
@@ -91,9 +118,9 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.drag-target-container {
+.page-container {
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   box-sizing: border-box;
 }
 
